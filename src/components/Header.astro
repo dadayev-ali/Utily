@@ -1,0 +1,99 @@
+---
+---
+
+<header class="w-full top-0 sticky bg-[#f8f9fb] dark:bg-slate-900 z-50">
+  <nav class="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-16 md:h-20">
+    <div class="text-xl md:text-2xl font-black tracking-tighter text-[#191c1e] dark:text-slate-100">
+      Utily
+    </div>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex items-center space-x-8 font-bold tracking-tight text-sm">
+      <a class="text-[#00478d] dark:text-blue-400 border-b-2 border-[#00478d] pb-1" href="#">Home</a>
+      <a class="text-[#424752] dark:text-slate-400 hover:text-[#191c1e] transition-colors duration-200" href="#">Contact Me</a>
+    </div>
+
+    <!-- Burger Button (mobile only) -->
+    <button
+      id="burger-btn"
+      class="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-md hover:bg-surface-container transition-colors"
+      aria-label="Open menu"
+    >
+      <span class="burger-line block w-5 h-0.5 bg-[#191c1e] dark:bg-slate-100 transition-all duration-300"></span>
+      <span class="burger-line block w-5 h-0.5 bg-[#191c1e] dark:bg-slate-100 transition-all duration-300"></span>
+      <span class="burger-line block w-5 h-0.5 bg-[#191c1e] dark:bg-slate-100 transition-all duration-300"></span>
+    </button>
+  </nav>
+</header>
+
+<!-- Backdrop -->
+<div
+  id="sidebar-backdrop"
+  class="fixed inset-0 bg-black/30 z-40 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"
+></div>
+
+<!-- Sidebar -->
+<div
+  id="sidebar"
+  class="fixed top-0 right-0 h-full w-64 bg-[#f8f9fb] dark:bg-slate-900 z-50 shadow-2xl translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+>
+  <!-- Sidebar Header -->
+  <div class="flex items-center justify-between px-6 h-16 border-b border-outline-variant/30">
+    <span class="font-black tracking-tighter text-[#191c1e] dark:text-slate-100">Menu</span>
+    <button
+      id="close-btn"
+      class="flex items-center justify-center w-8 h-8 rounded-md hover:bg-surface-container transition-colors"
+      aria-label="Close menu"
+    >
+      <span class="material-symbols-outlined text-[#424752] dark:text-slate-400 text-xl">close</span>
+    </button>
+  </div>
+
+  <!-- Sidebar Links -->
+  <nav class="flex flex-col px-4 py-6 gap-1">
+    <a
+      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-[#00478d] dark:text-blue-400 bg-primary-fixed/40"
+      href="#">
+      <span class="material-symbols-outlined text-lg">home</span>
+      Home
+    </a>
+    <a
+      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-[#424752] dark:text-slate-400 hover:bg-surface-container hover:text-[#191c1e] transition-colors duration-200"
+      href="#">
+      <span class="material-symbols-outlined text-lg">mail</span>
+      Contact Me
+    </a>
+  </nav>
+</div>
+
+<script is:inline>
+  const burgerBtn = document.getElementById("burger-btn");
+  const closeBtn = document.getElementById("close-btn");
+  const sidebar = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebar-backdrop");
+  const lines = Array.from(document.querySelectorAll(".burger-line"));
+
+  function openSidebar() {
+    sidebar.classList.remove("translate-x-full");
+    backdrop.classList.remove("opacity-0", "pointer-events-none");
+    backdrop.classList.add("opacity-100");
+    lines[0].classList.add("rotate-45", "translate-y-2");
+    lines[1].classList.add("opacity-0");
+    lines[2].classList.add("-rotate-45", "-translate-y-2");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeSidebar() {
+    sidebar.classList.add("translate-x-full");
+    backdrop.classList.add("opacity-0", "pointer-events-none");
+    backdrop.classList.remove("opacity-100");
+    lines[0].classList.remove("rotate-45", "translate-y-2");
+    lines[1].classList.remove("opacity-0");
+    lines[2].classList.remove("-rotate-45", "-translate-y-2");
+    document.body.style.overflow = "";
+  }
+
+  burgerBtn.addEventListener("click", openSidebar);
+  closeBtn.addEventListener("click", closeSidebar);
+  backdrop.addEventListener("click", closeSidebar);
+</script>
