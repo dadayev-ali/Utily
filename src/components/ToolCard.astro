@@ -3,16 +3,19 @@ interface Props {
   icon: string;
   title: string;
   description: string;
+  href?: string;
 }
 
-const { icon, title, description } = Astro.props;
+const { icon, title, description, href } = Astro.props;
+const Tag = href ? "a" : "div";
 ---
 
-<div
-  class="group cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col justify-between min-h-[180px] sm:min-h-[200px] md:min-h-[220px]"
+<Tag
+  href={href}
+  class="group cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed dark:hover:bg-surface-container-high hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col justify-between min-h-[180px] sm:min-h-[200px] md:min-h-[220px]"
 >
   <div class="flex justify-between items-start">
-    <div class="bg-surface-container-lowest p-2 sm:p-3 rounded-lg group-hover:bg-on-primary">
+    <div class="bg-surface-container-lowest w-12 h-12 flex items-center justify-center rounded-lg group-hover:bg-on-primary dark:group-hover:bg-surface-container-lowest">
       <span class="material-symbols-outlined text-tertiary text-2xl sm:text-3xl">{icon}</span>
     </div>
     <span
@@ -25,4 +28,4 @@ const { icon, title, description } = Astro.props;
       {description}
     </p>
   </div>
-</div>
+</Tag>

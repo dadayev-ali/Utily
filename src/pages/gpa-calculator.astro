@@ -1,0 +1,464 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Container from "../components/Container.astro";
+---
+
+<Layout title="GPA Calculator | Utily">
+  <Header />
+
+  <!-- Floating Back to Home (appears when original scrolls out of view) -->
+  <div
+    id="floating-back-wrapper"
+    class="sticky top-18 lg:top-24 z-40 h-0 overflow-visible opacity-0 -translate-y-2 transition-all duration-300"
+  >
+    <Container>
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-surface-container border border-outline-variant/30 rounded-full text-on-surface-variant hover:text-primary hover:border-primary text-xs font-bold uppercase tracking-widest shadow-md transition-colors duration-200"
+      >
+        <span class="material-symbols-outlined text-base">arrow_back</span>
+        Back
+      </a>
+    </Container>
+  </div>
+
+  <main>
+    <Container class="py-12">
+      <div
+        class="flex flex-col items-center max-w-4xl mx-auto text-center mb-16"
+      >
+        <!-- Back to Home Button -->
+        <div class="mb-8" id="back-home-anchor">
+          <a
+            class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors text-xs font-bold uppercase tracking-widest"
+            href="/"
+          >
+            <span class="material-symbols-outlined text-lg">arrow_back</span>
+            Back to Home
+          </a>
+        </div>
+        <!-- Title & Intro -->
+        <h1
+          class="text-4xl font-extrabold tracking-tight font-headline text-on-surface leading-tight mb-4"
+        >
+          GPA Calculator
+        </h1>
+        <p
+          class="text-on-surface-variant text-base leading-relaxed max-w-xl mb-8"
+        >
+          Precision-engineered tool for academic trajectory mapping. Input your
+          course data to generate a weighted grade point average with
+          architectural clarity.
+        </p>
+      </div>
+
+      <!-- Calculator Canvas -->
+      <div class="max-w-[58rem] mx-auto w-full">
+        <div
+          class="bg-surface-container-lowest rounded-xl p-6 sm:p-10 shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)]"
+        >
+          <!-- Toggle Switch for Course Names -->
+          <div
+            class="flex items-center justify-between mb-8 pb-6 border-b border-outline-variant/15"
+          >
+            <div class="flex items-center gap-3">
+              <input
+                class="toggle-checkbox sr-only"
+                id="toggleCourseNames"
+                name="toggle"
+                type="checkbox"
+              />
+              <label class="toggle-label cursor-pointer" for="toggleCourseNames"
+              ></label>
+              <label
+                class="text-sm font-semibold text-on-surface-variant cursor-pointer"
+                for="toggleCourseNames">Show Course Names</label
+              >
+            </div>
+          </div>
+
+          <!-- Course Header -->
+          <div class="grid grid-cols-12 gap-4 mb-4 px-2" id="courseHeader">
+            <div class="col-span-7 hidden" id="courseNameHeader">
+              <label
+                class="text-[0.65rem] font-label font-bold uppercase tracking-[0.1em] text-on-surface-variant"
+                >Course Name</label
+              >
+            </div>
+            <div class="col-span-5" id="creditsHeader">
+              <label
+                class="text-[0.65rem] font-label font-bold uppercase tracking-[0.1em] text-on-surface-variant text-center block"
+                >Credits</label
+              >
+            </div>
+            <div class="col-span-5" id="gradeHeader">
+              <label
+                class="text-[0.65rem] font-label font-bold uppercase tracking-[0.1em] text-on-surface-variant text-center block"
+                >Grade (0–4.0)</label
+              >
+            </div>
+            <div class="col-span-2" id="deleteHeader"></div>
+          </div>
+
+          <!-- Course Rows -->
+          <div class="space-y-4 mb-10" id="courseList">
+            <!-- Rows injected by JS -->
+          </div>
+
+          <!-- Interaction Row -->
+          <div
+            class="flex flex-wrap items-center justify-between gap-4 pt-8 border-t border-outline-variant/15"
+          >
+            <div class="flex gap-4">
+              <button
+                id="addCourseBtn"
+                class="flex cursor-pointer items-center gap-2 px-6 py-3 bg-secondary-container text-on-secondary-container rounded text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed dark:hover:bg-surface-container-high transition-colors"
+              >
+                <span class="material-symbols-outlined text-sm">add</span>
+                Add Course
+              </button>
+              <button
+                id="resetBtn"
+                class="flex items-center cursor-pointer gap-2 px-6 py-3 bg-surface-container-low text-on-surface-variant rounded text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high transition-colors"
+              >
+                <span class="material-symbols-outlined text-sm"
+                  >restart_alt</span
+                >
+                Reset
+              </button>
+            </div>
+            <button
+              id="calculateBtn"
+              class="bg-gradient-to-br from-primary cursor-pointer to-primary-container text-on-primary px-10 py-4 rounded font-headline font-extrabold tracking-tight hover:opacity-90 transition-all shadow-md active:scale-95"
+            >
+              Calculate GPA
+            </button>
+          </div>
+
+          <!-- Results Section -->
+          <div
+            id="resultsSection"
+            class="mt-12 bg-surface-container rounded-xl overflow-hidden hidden"
+          >
+            <div class="grid md:grid-cols-2">
+              <div
+                class="p-6 flex flex-col justify-center border-r border-outline-variant/20"
+              >
+                <span
+                  class="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-2"
+                  >Total Accumulated Credits</span
+                >
+                <div
+                  id="totalCredits"
+                  class="text-3xl font-headline font-bold text-on-surface"
+                >
+                  0.0
+                </div>
+                <div
+                  id="honorStatus"
+                  class="mt-4 flex items-center gap-2 text-tertiary text-xs font-semibold"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >trending_up</span
+                  >
+                  <span id="honorStatusText"></span>
+                </div>
+              </div>
+              <div
+                class="p-6 bg-surface-container-highest flex flex-col items-center justify-center relative overflow-hidden"
+              >
+                <div
+                  class="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl"
+                >
+                </div>
+                <span
+                  class="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-2 text-center"
+                  >Calculated GPA</span
+                >
+                <div
+                  id="gpaResult"
+                  class="text-5xl font-headline font-black text-primary tracking-tighter"
+                >
+                  —
+                </div>
+                <div
+                  id="honorBadge"
+                  class="mt-4 px-4 py-1.5 bg-tertiary text-on-tertiary rounded text-[0.65rem] font-black uppercase tracking-[0.15em] hidden"
+                >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+  #courseList input:focus::placeholder {
+    color: transparent;
+  }
+</style>
+
+<style>
+  .toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+    background-color: #c2c6d4;
+    border-radius: 9999px;
+    transition: background-color 0.25s ease;
+  }
+
+  .toggle-label::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 9999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease;
+  }
+
+  .toggle-checkbox:checked + .toggle-label {
+    background-color: #00478d;
+  }
+
+  .toggle-checkbox:checked + .toggle-label::after {
+    transform: translateX(18px);
+  }
+</style>
+
+<script>
+  const defaultCourses = [
+    { name: "", credits: "", grade: "" },
+    { name: "", credits: "", grade: "" },
+  ];
+
+  let showNames = false;
+
+  // col-span classes used in both states (must appear in source for Tailwind v4 JIT)
+  // names shown:  name=col-span-7  credits=col-span-2  grade=col-span-2  delete=col-span-1
+  // names hidden: name=hidden       credits=col-span-5  grade=col-span-5  delete=col-span-2
+
+  function applyColSpans(
+    el: Element,
+    creditsSpan: string,
+    gradeSpan: string,
+    deleteSpan: string,
+  ) {
+    const credits = el.querySelector(".credits-col") as HTMLElement;
+    const grade = el.querySelector(".grade-col") as HTMLElement;
+    const del = el.querySelector(".delete-col") as HTMLElement;
+    if (!credits || !grade || !del) return;
+    credits.className = credits.className.replace(/col-span-\d+/, creditsSpan);
+    grade.className = grade.className.replace(/col-span-\d+/, gradeSpan);
+    del.className = del.className.replace(/col-span-\d+/, deleteSpan);
+  }
+
+  function createRow(
+    course: {
+      name: string;
+      credits: string | number;
+      grade: string | number;
+    } = { name: "", credits: "", grade: "" },
+  ) {
+    const row = document.createElement("div");
+    row.className = "grid grid-cols-12 gap-4 items-center group";
+
+    row.innerHTML = `
+      <div class="col-span-7 course-name-col ${showNames ? "" : "hidden"}">
+        <input
+          class="w-full bg-surface-container-low border border-outline-variant/20 rounded px-4 py-3 text-sm font-body focus:ring-0 focus:bg-surface-container-lowest transition-all"
+          placeholder="e.g. Structural Mechanics"
+          type="text"
+          value="${course.name}"
+        />
+      </div>
+      <div class="${showNames ? "col-span-2" : "col-span-5"} credits-col">
+        <input
+          class="credits-input w-full bg-surface-container-low border-none rounded px-4 py-3 text-sm font-body text-center focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+          placeholder="3.0"
+          step="0.5"
+          min="0.5"
+          type="number"
+          value="${course.credits}"
+        />
+      </div>
+      <div class="${showNames ? "col-span-2" : "col-span-5"} grade-col">
+        <input
+          class="grade-input w-full bg-surface-container-low border-none rounded px-4 py-3 text-sm font-body text-center focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+          max="4.0"
+          min="0"
+          placeholder="4.0"
+          step="0.1"
+          type="number"
+          value="${course.grade}"
+        />
+      </div>
+      <div class="${showNames ? "col-span-1" : "col-span-2"} delete-col flex justify-center">
+        <button class="delete-btn text-outline hover:text-error transition-colors p-2">
+          <span class="material-symbols-outlined text-xl">delete</span>
+        </button>
+      </div>
+    `;
+
+    row.querySelector(".delete-btn")!.addEventListener("click", () => {
+      row.remove();
+    });
+
+    return row;
+  }
+
+  function getHonorLabel(gpa: number) {
+    if (gpa >= 3.9) return "Summa Cum Laude";
+    if (gpa >= 3.7) return "Magna Cum Laude";
+    if (gpa >= 3.5) return "Cum Laude";
+    if (gpa >= 3.0) return "Honors";
+    return null;
+  }
+
+  function getTrackText(gpa: number) {
+    if (gpa >= 3.7) return "On track for honors";
+    if (gpa >= 3.0) return "Good standing";
+    if (gpa >= 2.0) return "Satisfactory progress";
+    return "Needs improvement";
+  }
+
+  function calculateGPA() {
+    const rows = document.querySelectorAll("#courseList > div");
+    let totalPoints = 0;
+    let totalCredits = 0;
+
+    rows.forEach((row) => {
+      const credits = parseFloat(
+        (row.querySelector(".credits-input") as HTMLInputElement)?.value || "0",
+      );
+      const grade = parseFloat(
+        (row.querySelector(".grade-input") as HTMLInputElement)?.value || "0",
+      );
+      if (!isNaN(credits) && !isNaN(grade) && credits > 0) {
+        totalPoints += credits * grade;
+        totalCredits += credits;
+      }
+    });
+
+    const gpa = totalCredits > 0 ? totalPoints / totalCredits : 0;
+
+    const resultsSection = document.getElementById("resultsSection")!;
+    resultsSection.classList.remove("hidden");
+
+    document.getElementById("totalCredits")!.textContent =
+      totalCredits.toFixed(1);
+    document.getElementById("gpaResult")!.textContent = gpa.toFixed(2);
+    document.getElementById("honorStatusText")!.textContent = getTrackText(gpa);
+
+    const badge = document.getElementById("honorBadge")!;
+    const label = getHonorLabel(gpa);
+    if (label) {
+      badge.textContent = label;
+      badge.classList.remove("hidden");
+    } else {
+      badge.classList.add("hidden");
+    }
+  }
+
+  function resetAll() {
+    const list = document.getElementById("courseList")!;
+    list.innerHTML = "";
+    defaultCourses.forEach((c) => list.appendChild(createRow(c)));
+    document.getElementById("resultsSection")!.classList.add("hidden");
+  }
+
+  // Toggle course name visibility
+  const toggle = document.getElementById(
+    "toggleCourseNames",
+  ) as HTMLInputElement;
+  const courseNameHeader = document.getElementById("courseNameHeader")!;
+  const creditsHeader = document.getElementById("creditsHeader")!;
+  const gradeHeader = document.getElementById("gradeHeader")!;
+  const deleteHeader = document.getElementById("deleteHeader")!;
+
+  toggle.addEventListener("change", function () {
+    showNames = this.checked;
+
+    // Update header
+    courseNameHeader.classList.toggle("hidden", !showNames);
+    if (showNames) {
+      creditsHeader.className = creditsHeader.className.replace(
+        /col-span-\d+/,
+        "col-span-2",
+      );
+      gradeHeader.className = gradeHeader.className.replace(
+        /col-span-\d+/,
+        "col-span-2",
+      );
+      deleteHeader.className = deleteHeader.className.replace(
+        /col-span-\d+/,
+        "col-span-1",
+      );
+    } else {
+      creditsHeader.className = creditsHeader.className.replace(
+        /col-span-\d+/,
+        "col-span-5",
+      );
+      gradeHeader.className = gradeHeader.className.replace(
+        /col-span-\d+/,
+        "col-span-5",
+      );
+      deleteHeader.className = deleteHeader.className.replace(
+        /col-span-\d+/,
+        "col-span-2",
+      );
+    }
+
+    // Update all existing rows
+    document.querySelectorAll("#courseList > div").forEach((row) => {
+      const nameCol = row.querySelector(".course-name-col") as HTMLElement;
+      if (nameCol) nameCol.classList.toggle("hidden", !showNames);
+      applyColSpans(
+        row,
+        showNames ? "col-span-2" : "col-span-5",
+        showNames ? "col-span-2" : "col-span-5",
+        showNames ? "col-span-1" : "col-span-2",
+      );
+    });
+  });
+
+  document.getElementById("addCourseBtn")!.addEventListener("click", () => {
+    const list = document.getElementById("courseList")!;
+    list.appendChild(createRow());
+  });
+
+  document.getElementById("resetBtn")!.addEventListener("click", resetAll);
+  document
+    .getElementById("calculateBtn")!
+    .addEventListener("click", calculateGPA);
+
+  // Initialize with default rows
+  resetAll();
+
+  // Floating back button visibility
+  const floatingBack = document.getElementById("floating-back-wrapper")!;
+  const anchor = document.getElementById("back-home-anchor")!;
+
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) {
+      floatingBack.classList.remove("opacity-0", "-translate-y-2");
+      floatingBack.classList.add("opacity-100", "translate-y-0");
+    } else {
+      floatingBack.classList.add("opacity-0", "-translate-y-2");
+      floatingBack.classList.remove("opacity-100", "translate-y-0");
+    }
+  });
+
+  observer.observe(anchor);
+</script>

@@ -1,68 +1,120 @@
 ---
+import Container from "./Container.astro";
+const isHome = Astro.url.pathname === "/";
 ---
 
-<header class="w-full top-0 sticky bg-[#f8f9fb] dark:bg-slate-900 z-50">
-  <nav class="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 md:px-8 h-16 md:h-20">
-    <div class="text-xl md:text-2xl font-black tracking-tighter text-[#191c1e] dark:text-slate-100">
-      Utility Architect
-    </div>
+<header
+  id="main-header"
+  class="w-full top-0 sticky bg-surface z-50 border-b border-transparent transition-colors duration-300"
+>
+  <Container>
+    <div class="flex justify-between items-center h-16 md:h-20">
+      <a
+        href="/"
+        class="text-xl md:text-2xl font-black tracking-tighter text-on-surface"
+      >
+        Utily
+      </a>
 
-    <!-- Desktop Nav -->
-    <div class="hidden md:flex items-center space-x-8 font-bold tracking-tight text-sm">
-      <a class="text-[#00478d] dark:text-blue-400 border-b-2 border-[#00478d] pb-1" href="#">Home</a>
-      <a class="text-[#424752] dark:text-slate-400 hover:text-[#191c1e] transition-colors duration-200" href="#">Contact Me</a>
-    </div>
+      <!-- Desktop Nav -->
+      <div
+        class="hidden md:flex items-center space-x-8 font-bold tracking-tight text-sm"
+      >
+        <a
+          class={isHome
+            ? "text-primary lg:text-base border-b-2 border-primary pb-1"
+            : "text-on-surface-variant lg:text-base hover:text-on-surface transition-colors duration-200"}
+          href="/">Home</a
+        >
+        <a
+          class="text-on-surface-variant lg:text-base hover:text-on-surface transition-colors duration-200"
+          href="#">Contact Me</a
+        >
+        <button
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+          class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-primary"
+        >
+          <span id="theme-icon" class="material-symbols-outlined"
+            >dark_mode</span
+          >
+        </button>
+      </div>
 
-    <!-- Burger Button (mobile only) -->
-    <button
-      id="burger-btn"
-      class="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-md hover:bg-surface-container transition-colors"
-      aria-label="Open menu"
-    >
-      <span class="burger-line block w-5 h-0.5 bg-[#191c1e] dark:bg-slate-100 transition-all duration-300"></span>
-      <span class="burger-line block w-5 h-0.5 bg-[#191c1e] dark:bg-slate-100 transition-all duration-300"></span>
-      <span class="burger-line block w-5 h-0.5 bg-[#191c1e] dark:bg-slate-100 transition-all duration-300"></span>
-    </button>
-  </nav>
+      <!-- Burger Button (mobile only) -->
+      <button
+        id="burger-btn"
+        class="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-md hover:bg-surface-container transition-colors"
+        aria-label="Open menu"
+      >
+        <span
+          class="burger-line block w-5 h-0.5 bg-on-surface transition-all duration-300"
+        ></span>
+        <span
+          class="burger-line block w-5 h-0.5 bg-on-surface transition-all duration-300"
+        ></span>
+        <span
+          class="burger-line block w-5 h-0.5 bg-on-surface transition-all duration-300"
+        ></span>
+      </button>
+    </div>
+  </Container>
 </header>
 
 <!-- Backdrop -->
 <div
   id="sidebar-backdrop"
   class="fixed inset-0 bg-black/30 z-40 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"
-></div>
+>
+</div>
 
 <!-- Sidebar -->
 <div
   id="sidebar"
-  class="fixed top-0 right-0 h-full w-64 bg-[#f8f9fb] dark:bg-slate-900 z-50 shadow-2xl translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+  class="fixed top-0 right-0 h-full w-64 bg-surface z-50 shadow-2xl translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
 >
   <!-- Sidebar Header -->
-  <div class="flex items-center justify-between px-6 h-16 border-b border-outline-variant/30">
-    <span class="font-black tracking-tighter text-[#191c1e] dark:text-slate-100">Menu</span>
+  <div
+    class="flex items-center justify-between px-6 h-16 border-b border-outline-variant/30"
+  >
+    <span class="font-black tracking-tighter text-on-surface">Menu</span>
     <button
       id="close-btn"
       class="flex items-center justify-center w-8 h-8 rounded-md hover:bg-surface-container transition-colors"
       aria-label="Close menu"
     >
-      <span class="material-symbols-outlined text-[#424752] dark:text-slate-400 text-xl">close</span>
+      <span class="material-symbols-outlined text-on-surface-variant text-xl"
+        >close</span
+      >
     </button>
   </div>
 
   <!-- Sidebar Links -->
   <nav class="flex flex-col px-4 py-6 gap-1">
     <a
-      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-[#00478d] dark:text-blue-400 bg-primary-fixed/40"
-      href="#">
+      class={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm ${isHome ? "text-primary bg-primary/10" : "text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-200"}`}
+      href="/"
+    >
       <span class="material-symbols-outlined text-lg">home</span>
       Home
     </a>
+
     <a
-      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-[#424752] dark:text-slate-400 hover:bg-surface-container hover:text-[#191c1e] transition-colors duration-200"
-      href="#">
+      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-200"
+      href="#"
+    >
       <span class="material-symbols-outlined text-lg">mail</span>
       Contact Me
     </a>
+    <button
+      id="theme-toggle-mobile"
+      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-200 w-full"
+    >
+      <span id="theme-icon-mobile" class="material-symbols-outlined text-lg"
+        >dark_mode</span
+      >
+      <span id="theme-label-mobile">Dark Mode</span>
+    </button>
   </nav>
 </div>
 
@@ -96,4 +148,51 @@
   burgerBtn.addEventListener("click", openSidebar);
   closeBtn.addEventListener("click", closeSidebar);
   backdrop.addEventListener("click", closeSidebar);
+
+  const header = document.getElementById("main-header");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 0) {
+      header.style.borderBottomColor = "#00478d";
+    } else {
+      header.style.borderBottomColor = "transparent";
+    }
+  });
+
+  function updateThemeIcons() {
+    const isDark = document.documentElement.classList.contains("dark");
+    document.getElementById("theme-icon").textContent = isDark
+      ? "light_mode"
+      : "dark_mode";
+    document.getElementById("theme-icon-mobile").textContent = isDark
+      ? "light_mode"
+      : "dark_mode";
+    document.getElementById("theme-label-mobile").textContent = isDark
+      ? "Light Mode"
+      : "Dark Mode";
+  }
+
+  function toggleDarkMode() {
+    const html = document.documentElement;
+    if (html.classList.contains("dark")) {
+      html.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      html.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+    updateThemeIcons();
+  }
+
+  // Set correct icon on load
+  updateThemeIcons();
+
+  document
+    .getElementById("theme-toggle")
+    .addEventListener("click", toggleDarkMode);
+  document
+    .getElementById("theme-toggle-mobile")
+    .addEventListener("click", () => {
+      toggleDarkMode();
+      closeSidebar();
+    });
 </script>
