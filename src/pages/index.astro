@@ -1,15 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import SearchBar from "../components/SearchBar.astro";
 import ToolGrid from "../components/ToolGrid.astro";
-import Footer from "../components/Footer.astro";
 import Container from "../components/Container.astro";
 ---
 
 <Layout>
-  <Header />
   <main>
     <Container class="pb-12 md:pb-16">
       <Hero />
@@ -17,5 +14,4 @@ import Container from "../components/Container.astro";
       <ToolGrid />
     </Container>
   </main>
-  <Footer />
 </Layout>

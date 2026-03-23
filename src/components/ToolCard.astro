@@ -12,9 +12,9 @@ const Tag = href ? "a" : "div";
 
 <Tag
   href={href}
-  class="group cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed dark:hover:bg-surface-container-high hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col justify-between min-h-[180px] sm:min-h-[200px] md:min-h-[220px]"
+  class="group cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed dark:hover:bg-surface-container-high hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col min-h-[180px] sm:min-h-[200px] md:min-h-[220px]"
 >
-  <div class="flex justify-between items-start">
+  <div class="flex justify-between items-start mb-4 sm:mb-5">
     <div class="bg-surface-container-lowest w-12 h-12 flex items-center justify-center rounded-lg group-hover:bg-on-primary dark:group-hover:bg-surface-container-lowest">
       <span class="material-symbols-outlined text-tertiary text-2xl sm:text-3xl">{icon}</span>
     </div>
@@ -22,10 +22,9 @@ const Tag = href ? "a" : "div";
       class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity"
     >arrow_outward</span>
   </div>
-  <div>
-    <h3 class="text-base sm:text-lg md:text-xl font-bold text-on-surface mb-1 sm:mb-2">{title}</h3>
-    <p class="text-on-surface-variant text-xs sm:text-sm group-hover:text-on-secondary-fixed-variant">
-      {description}
-    </p>
-  </div>
+  <h3 class="text-base sm:text-lg md:text-xl font-bold text-on-surface mb-1 sm:mb-2">{title}</h3>
+  <p class="text-on-surface-variant text-xs sm:text-sm group-hover:text-on-secondary-fixed-variant">
+    {description}
+  </p>
+  <div class="flex-1"></div>
 </Tag>
