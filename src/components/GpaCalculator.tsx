@@ -84,12 +84,12 @@ function NumberInput({
         onChange={(e) => onChange(e.target.value)}
         className={`w-full bg-surface-container-low rounded px-4 py-3 text-sm text-center transition-all focus:outline-none border ${
           error
-            ? "border-red-400 ring-2 ring-red-400 bg-red-50 dark:bg-red-950/20"
+            ? "border-error ring-2 ring-error bg-error/10"
             : "border-transparent focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest"
         }`}
       />
       {error && (
-        <p className="text-red-500 text-[0.65rem] mt-1 text-center">{error}</p>
+        <p className="text-error text-[0.65rem] mt-1 text-center">{error}</p>
       )}
     </div>
   );
@@ -193,10 +193,10 @@ export default function GpaCalculator() {
 
   //  Column span helpers
 
-  const nameSpan = "col-span-7";
-  const creditsSpan = showNames ? "col-span-2" : "col-span-5";
-  const gradeSpan = showNames ? "col-span-2" : "col-span-5";
-  const deleteSpan = showNames ? "col-span-1" : "col-span-2";
+  const nameSpan    = "col-span-12 sm:col-span-7";
+  const creditsSpan = showNames ? "col-span-5 sm:col-span-2" : "col-span-5";
+  const gradeSpan   = showNames ? "col-span-5 sm:col-span-2" : "col-span-5";
+  const deleteSpan  = showNames ? "col-span-2 sm:col-span-1" : "col-span-2";
 
   //  Render
 
@@ -214,12 +214,12 @@ export default function GpaCalculator() {
           />
           <label
             htmlFor={toggleId}
-            className="relative inline-block w-[38px] h-[20px] rounded-full cursor-pointer
-              bg-[#c2c6d4] peer-checked:bg-[#00478d] transition-colors duration-200
-              after:content-[''] after:absolute after:top-[3px] after:left-[3px]
-              after:w-[14px] after:h-[14px] after:bg-white after:rounded-full
+            className="relative inline-block w-9.5 h-5 rounded-full cursor-pointer
+              bg-outline-variant peer-checked:bg-primary transition-colors duration-200
+              after:content-[''] after:absolute after:top-0.75 after:left-0.75
+              after:w-3.5 after:h-3.5 after:bg-white after:rounded-full
               after:shadow after:transition-transform after:duration-200
-              peer-checked:after:translate-x-[18px]"
+              peer-checked:after:translate-x-4.5"
           />
           <label
             htmlFor={toggleId}
@@ -231,21 +231,21 @@ export default function GpaCalculator() {
       </div>
 
       {/* ── Column headers ── */}
-      <div className="grid grid-cols-12 gap-4 mb-4 px-2">
+      <div className="grid grid-cols-12 gap-2 sm:gap-4 mb-4 px-2">
         {showNames && (
           <div className={nameSpan}>
-            <span className="text-[0.65rem] font-bold uppercase tracking-[0.1em] text-on-surface-variant">
+            <span className="text-[0.65rem] font-bold uppercase tracking-widest text-on-surface-variant">
               Course Name
             </span>
           </div>
         )}
         <div className={creditsSpan}>
-          <span className="text-[0.65rem] font-bold uppercase tracking-[0.1em] text-on-surface-variant text-center block">
+          <span className="text-[0.65rem] font-bold uppercase tracking-widest text-on-surface-variant text-center block">
             Credits
           </span>
         </div>
         <div className={gradeSpan}>
-          <span className="text-[0.65rem] font-bold uppercase tracking-[0.1em] text-on-surface-variant text-center block">
+          <span className="text-[0.65rem] font-bold uppercase tracking-widest text-on-surface-variant text-center block">
             Grade
           </span>
         </div>
@@ -259,7 +259,7 @@ export default function GpaCalculator() {
           return (
             <div
               key={course.id}
-              className="grid grid-cols-12 gap-4 items-start"
+              className={`grid grid-cols-12 gap-2 sm:gap-4 items-center ${showNames ? "sm:border-0 border-b border-outline-variant/20 pb-3 last:border-b-0 last:pb-0" : ""}`}
             >
               {showNames && (
                 <div className={nameSpan}>
@@ -298,11 +298,11 @@ export default function GpaCalculator() {
                 />
               </div>
 
-              <div className={`${deleteSpan} flex justify-center pt-2`}>
+              <div className={`${deleteSpan} flex justify-center -ml-3 sm:ml-0`}>
                 <button
                   onClick={() => removeCourse(course.id)}
                   aria-label="Remove course"
-                  className="text-outline hover:text-error transition-colors p-2"
+                  className="text-outline hover:text-error transition-colors p-1 sm:p-2"
                 >
                   <span className="material-symbols-outlined text-xl">
                     delete
@@ -315,7 +315,7 @@ export default function GpaCalculator() {
       </div>
 
       {/* ── Action buttons ── */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pt-8 border-t border-outline-variant/15">
+      <div className="flex flex-wrap items-center justify-between gap-4 pt-8 border-t border-outline-variant/15 [&>*]:w-full [&>*]:sm:w-auto">
         <div className="flex gap-4">
           <button
             onClick={addCourse}
@@ -346,7 +346,7 @@ export default function GpaCalculator() {
       {result && (
         <div className="mt-12 bg-surface-container rounded-xl overflow-hidden">
           <div className="grid md:grid-cols-2">
-            <div className="p-6 flex flex-col justify-center border-r border-outline-variant/20">
+            <div className="p-6 flex flex-col justify-center border-b md:border-b-0 md:border-r border-outline-variant/20">
               <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-2">
                 Total Accumulated Credits
               </span>
