@@ -7,7 +7,7 @@ interface Props {
   title?: string;
 }
 
-const { title = "Utily | Digital Toolset" } = Astro.props;
+const { title = "Utily" } = Astro.props;
 ---
 
 <html lang="en">
@@ -30,7 +30,9 @@ const { title = "Utily | Digital Toolset" } = Astro.props;
       rel="stylesheet"
     />
   </head>
-  <body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <body
+    class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed"
+  >
     <Header />
     <slot />
     <Footer />
