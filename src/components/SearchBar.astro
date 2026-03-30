@@ -18,9 +18,27 @@
       search
     </span>
     <input
+      id="tool-search"
       class="search-input w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 bg-surface-container-low border border-outline-variant rounded-full font-body text-sm sm:text-base text-on-surface placeholder:text-on-surface-variant/60 transition-all"
       placeholder="Search for a tool (e.g., GPA, Currency)..."
       type="text"
     />
   </div>
 </div>
+
+<script>
+  const input = document.getElementById("tool-search") as HTMLInputElement;
+  const noResults = document.getElementById("no-results")!;
+  input.addEventListener("input", () => {
+    const query = input.value.trim().toLowerCase();
+    const cards = document.querySelectorAll<HTMLElement>(".tool-card");
+    let visible = 0;
+    cards.forEach((card) => {
+      const title = card.dataset.title ?? "";
+      const show = title.includes(query);
+      card.style.display = show ? "" : "none";
+      if (show) visible++;
+    });
+    noResults.classList.toggle("hidden", visible > 0);
+  });
+</script>

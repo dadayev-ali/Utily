@@ -1,44 +1,15 @@
 ---
 import ToolCard from "./ToolCard.astro";
-
-const tools = [
-  {
-    icon: "calculate",
-    title: "GPA Calculator",
-    description: "Fast, flexible GPA calculation for any grading system.",
-    href: "/gpa-calculator",
-  },
-  {
-    icon: "key",
-    title: "Password Generator",
-    description: "Generate safe and reliable passwords instantly",
-    href: "/password-generator",
-  },
-  // {
-  //   icon: "currency_exchange",
-  //   title: "Currency Converter",
-  //   description: "Real-time global exchange rates with architectural precision.",
-  // },
-  // {
-  //   icon: "straighten",
-  //   title: "Unit Converter",
-  //   description: "Seamless conversion between metric and imperial standards.",
-  // },
-  // {
-  //   icon: "format_align_left",
-  //   title: "Text Formatter",
-  //   description: "Sanitize and structure raw strings for system integration.",
-  // },
-  // {
-  //   icon: "code",
-  //   title: "Base64 Encoder",
-  //   description: "Standardized binary-to-text encoding and decoding.",
-  // },
-];
+import { tools } from "../data/tools";
 ---
 
 <div
   class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+  id="tool-grid"
 >
   {tools.map((tool) => <ToolCard {...tool} />)}
 </div>
+
+<p id="no-results" class="hidden text-center text-on-surface-variant text-base sm:text-lg mt-8">
+  No tools found for your search.
+</p>

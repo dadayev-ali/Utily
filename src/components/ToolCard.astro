@@ -1,5 +1,6 @@
 ---
 interface Props {
+  id?: string;
   icon: string;
   title: string;
   description: string;
@@ -12,7 +13,8 @@ const Tag = href ? "a" : "div";
 
 <Tag
   href={href}
-  class="group cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed dark:hover:bg-surface-container-high hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col min-h-45 sm:min-h-50 md:min-h-55"
+  data-title={title.toLowerCase()}
+  class="tool-card group cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed dark:hover:bg-surface-container-high hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col min-h-45 sm:min-h-50 md:min-h-55"
 >
   <div class="flex justify-between items-start mb-4 sm:mb-5">
     <div
