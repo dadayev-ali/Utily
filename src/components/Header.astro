@@ -71,7 +71,7 @@ const isHome = Astro.url.pathname === "/";
 <!-- Sidebar -->
 <div
   id="sidebar"
-  class="fixed top-0 right-0 h-full w-64 bg-surface z-50 shadow-2xl translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
+  class="fixed top-0 right-0 h-full w-64 bg-surface z-50 translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col"
 >
   <!-- Sidebar Header -->
   <div
@@ -127,6 +127,7 @@ const isHome = Astro.url.pathname === "/";
 
   function openSidebar() {
     sidebar.classList.remove("translate-x-full");
+    sidebar.classList.add("shadow-2xl");
     backdrop.classList.remove("opacity-0", "pointer-events-none");
     backdrop.classList.add("opacity-100");
     lines[0].classList.add("rotate-45", "translate-y-2");
@@ -137,6 +138,7 @@ const isHome = Astro.url.pathname === "/";
 
   function closeSidebar() {
     sidebar.classList.add("translate-x-full");
+    sidebar.classList.remove("shadow-2xl");
     backdrop.classList.add("opacity-0", "pointer-events-none");
     backdrop.classList.remove("opacity-100");
     lines[0].classList.remove("rotate-45", "translate-y-2");

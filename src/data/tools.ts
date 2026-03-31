@@ -28,15 +28,25 @@ export const tools: Tool[] = [
     description: "Convert colors between HEX, RGB, HSL, and CMYK formats.",
     href: "/color-converter",
   },
+  {
+    id: "e2f5b1",
+    icon: "notes",
+    title: "Word Counter",
+    description:
+      "Count words, characters, sentences and estimate reading time instantly.",
+    href: "/word-counter",
+  },
+  {
+    id: "d9a3e7",
+    icon: "straighten",
+    title: "Unit Converter",
+    description: "Seamless conversion between metric and imperial standards.",
+    href: "/unit-converter",
+  },
   // {
   //   icon: "currency_exchange",
   //   title: "Currency Converter",
   //   description: "Real-time global exchange rates with architectural precision.",
-  // },
-  // {
-  //   icon: "straighten",
-  //   title: "Unit Converter",
-  //   description: "Seamless conversion between metric and imperial standards.",
   // },
   // {
   //   icon: "format_align_left",

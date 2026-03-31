@@ -112,6 +112,25 @@ select:focus {
   box-shadow: 0 0 0 2px var(--color-primary);
 }
 
+/* Custom scrollbar for unit lists */
+.unit-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.unit-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.unit-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-primary-container);
+  border-radius: 999px;
+}
+.unit-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+.unit-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-container) transparent;
+}
+
 /* Hide number input spinners */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
