@@ -18,7 +18,7 @@ export const tools: Tool[] = [
     id: "b7e2a4",
     icon: "key",
     title: "Password Generator",
-    description: "Generate safe and reliable passwords instantly",
+    description: "Generate safe and reliable passwords instantly.",
     href: "/password-generator",
   },
   {
@@ -42,6 +42,14 @@ export const tools: Tool[] = [
     title: "Unit Converter",
     description: "Seamless conversion between metric and imperial standards.",
     href: "/unit-converter",
+  },
+  {
+    id: "f1c4d2",
+    icon: "data_object",
+    title: "JSON Formatter",
+    description:
+      "Validate, beautify, minify, and generate TypeScript interfaces from JSON.",
+    href: "/json-formatter",
   },
   // {
   //   icon: "currency_exchange",
