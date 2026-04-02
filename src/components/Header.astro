@@ -33,7 +33,7 @@ const isHome = Astro.url.pathname === "/";
         <button
           id="theme-toggle"
           aria-label="Toggle dark mode"
-          class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-primary"
+          class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-primary cursor-pointer"
         >
           <span id="theme-icon" class="material-symbols-outlined"
             >dark_mode</span
@@ -163,14 +163,14 @@ const isHome = Astro.url.pathname === "/";
   function updateThemeIcons() {
     const isDark = document.documentElement.classList.contains("dark");
     document.getElementById("theme-icon").textContent = isDark
-      ? "light_mode"
-      : "dark_mode";
+      ? "dark_mode"
+      : "light_mode";
     document.getElementById("theme-icon-mobile").textContent = isDark
-      ? "light_mode"
-      : "dark_mode";
+      ? "dark_mode"
+      : "light_mode";
     document.getElementById("theme-label-mobile").textContent = isDark
-      ? "Light Mode"
-      : "Dark Mode";
+      ? "Dark Mode"
+      : "Light Mode";
   }
 
   function toggleDarkMode() {

@@ -51,6 +51,20 @@ export const tools: Tool[] = [
       "Validate, beautify, minify, and generate TypeScript interfaces from JSON.",
     href: "/json-formatter",
   },
+  {
+    id: "a8c3f2",
+    icon: "code",
+    title: "Base64 Encoder/Decoder",
+    description: "Encode text to Base64 or decode to readable content.",
+    href: "/base64-encoder-decoder",
+  },
+  {
+    id: "b2e9f4",
+    icon: "payments",
+    title: "Loan Calculator",
+    description: "Calculate monthly payments, total interest, and full amortization schedule for any loan.",
+    href: "/loan-calculator",
+  },
   // {
   //   icon: "currency_exchange",
   //   title: "Currency Converter",
@@ -60,10 +74,5 @@ export const tools: Tool[] = [
   //   icon: "format_align_left",
   //   title: "Text Formatter",
   //   description: "Sanitize and structure raw strings for system integration.",
-  // },
-  // {
-  //   icon: "code",
-  //   title: "Base64 Encoder",
-  //   description: "Standardized binary-to-text encoding and decoding.",
   // },
 ];
