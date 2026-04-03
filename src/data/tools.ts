@@ -65,6 +65,20 @@ export const tools: Tool[] = [
     description: "Calculate monthly payments, total interest, and full amortization schedule for any loan.",
     href: "/loan-calculator",
   },
+  {
+    id: "c7d4a1",
+    icon: "table_convert",
+    title: "CSV to JSON Converter",
+    description: "Convert CSV files or pasted data into structured JSON with configurable parsing rules.",
+    href: "/csv-to-json-converter",
+  },
+  {
+    id: "d3e8b2",
+    icon: "link",
+    title: "URL Encoder/Decoder",
+    description: "Encode plain text or URLs into percent-encoded format, or decode them back instantly.",
+    href: "/url-encoder-decoder",
+  },
   // {
   //   icon: "currency_exchange",
   //   title: "Currency Converter",
