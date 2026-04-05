@@ -5,9 +5,10 @@ interface Props {
   title: string;
   description: string;
   href?: string;
+  category?: string;
 }
 
-const { id, icon, title, description, href } = Astro.props;
+const { id, icon, title, description, href, category } = Astro.props;
 const Tag = href ? "a" : "div";
 ---
 
@@ -15,6 +16,7 @@ const Tag = href ? "a" : "div";
   href={href}
   data-title={title.toLowerCase()}
   data-tool-id={id}
+  data-category={category}
   class="tool-card group relative cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed dark:hover:bg-surface-container-high hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col min-h-45 sm:min-h-50 md:min-h-55"
 >
   <!-- Pin button: always visible on touch screens, hover-only on desktop -->

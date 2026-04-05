@@ -1,5 +1,8 @@
 ---
+import { categoryMeta } from "../data/tools";
+import type { ToolCategory } from "../data/tools";
 
+const categories = Object.keys(categoryMeta) as ToolCategory[];
 ---
 
 <style>
@@ -8,11 +11,23 @@
     box-shadow: none;
     border-color: var(--color-primary-container);
   }
+  #chips-scroll-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+  }
+  #chips-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  #chips-scroll-container.dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
 </style>
 
-<div class="w-full max-w-3xl mb-4 mt-8 sm:mt-10 md:mt-12">
+<div class="w-full mb-4 mt-8 sm:mt-10 md:mt-12">
   <!-- Search input -->
-  <div class="relative flex items-center group">
+  <div class="relative flex items-center group max-w-3xl">
     <span
       class="material-symbols-outlined absolute left-3 sm:left-4 text-on-surface-variant group-focus-within:text-primary-container transition-colors text-xl sm:text-2xl"
     >
@@ -26,30 +41,51 @@
     />
   </div>
 
-  <!-- Pinned filter toggle -->
+  <!-- Pinned filter + Category chips -->
   <div class="flex items-center gap-3 mt-4 ml-1">
-    <div
-      id="pinned-filter-btn"
-      role="switch"
-      aria-checked="false"
-      style="position:relative; display:inline-block; width:44px; height:24px; border-radius:12px; background-color:#424752; cursor:pointer; flex-shrink:0; transition:background-color 200ms ease;"
-    >
+    <!-- Pinned toggle (fixed, no scroll) -->
+    <div class="flex items-center gap-3 shrink-0">
       <div
-        id="pinned-filter-thumb"
-        style="position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background-color:#f8f9fb; transition:transform 200ms ease;"
+        id="pinned-filter-btn"
+        role="switch"
+        aria-checked="false"
+        style="position:relative; display:inline-block; width:44px; height:24px; border-radius:12px; background-color:#424752; cursor:pointer; flex-shrink:0; transition:background-color 200ms ease;"
       >
+        <div
+          id="pinned-filter-thumb"
+          style="position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background-color:#f8f9fb; transition:transform 200ms ease;"
+        >
+        </div>
+      </div>
+      <label
+        class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-on-surface-variant cursor-pointer select-none whitespace-nowrap"
+        id="pinned-filter-label"
+      >
+        <span
+          class="material-symbols-outlined text-base leading-none"
+          id="pinned-filter-icon">keep</span
+        >
+        Show pinned only
+      </label>
+    </div>
+
+    <!-- Divider -->
+    <div class="w-px h-5 bg-outline-variant/40 shrink-0"></div>
+
+    <!-- Category chips — drag-scrollable, mapped from ToolCategory -->
+    <div id="chips-scroll-container" class="flex-1 overflow-x-auto">
+      <div class="flex items-center gap-2 w-max" id="category-chips">
+        {categories.map((cat) => (
+          <button
+            class="category-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline-variant/50 bg-surface-container-low text-on-surface-variant text-[11px] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer hover:border-primary/50 hover:text-primary select-none whitespace-nowrap"
+            data-category={cat}
+          >
+            <span class="material-symbols-outlined text-sm leading-none">{categoryMeta[cat].icon}</span>
+            {categoryMeta[cat].label}
+          </button>
+        ))}
       </div>
     </div>
-    <label
-      class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-on-surface-variant cursor-pointer select-none"
-      id="pinned-filter-label"
-    >
-      <span
-        class="material-symbols-outlined text-base leading-none"
-        id="pinned-filter-icon">keep</span
-      >
-      Show pinned only
-    </label>
   </div>
 </div>
 
@@ -78,9 +114,56 @@
     "pinned-filter-label",
   ) as HTMLElement;
   const noResults = document.getElementById("no-results")!;
+  const categoryChips =
+    document.querySelectorAll<HTMLElement>(".category-chip");
+  const chipsScroll = document.getElementById(
+    "chips-scroll-container",
+  ) as HTMLElement;
 
   let showPinnedOnly = false;
+  const selectedCategories = new Set<string>();
 
+  // ── Drag-to-scroll on chips container ────────────────────────────────────────
+  let isDragging = false;
+  let dragStartX = 0;
+  let scrollStart = 0;
+  let hasDragged = false;
+
+  chipsScroll.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    hasDragged = false;
+    dragStartX = e.pageX - chipsScroll.offsetLeft;
+    scrollStart = chipsScroll.scrollLeft;
+    chipsScroll.classList.add("dragging");
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    chipsScroll.classList.remove("dragging");
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - chipsScroll.offsetLeft;
+    const walk = x - dragStartX;
+    if (Math.abs(walk) > 4) hasDragged = true;
+    chipsScroll.scrollLeft = scrollStart - walk;
+  });
+
+  // Suppress chip click if user was dragging
+  chipsScroll.addEventListener(
+    "click",
+    (e) => {
+      if (hasDragged) {
+        e.stopPropagation();
+        hasDragged = false;
+      }
+    },
+    true,
+  );
+
+  // ── Filter logic ──────────────────────────────────────────────────────────────
   function applyFilters() {
     const query = input.value.trim().toLowerCase();
     const pinned = getPinned();
@@ -90,9 +173,12 @@
     cards.forEach((card) => {
       const title = card.dataset.title ?? "";
       const id = card.dataset.toolId ?? "";
+      const category = card.dataset.category ?? "";
       const matchesQuery = title.includes(query);
       const matchesPinned = !showPinnedOnly || pinned.includes(id);
-      const show = matchesQuery && matchesPinned;
+      const matchesCategory =
+        selectedCategories.size === 0 || selectedCategories.has(category);
+      const show = matchesQuery && matchesPinned && matchesCategory;
       card.style.display = show ? "" : "none";
       if (show) visible++;
     });
@@ -101,6 +187,42 @@
     noResults.classList.toggle("hidden", !hasNoResults);
     noResults.classList.toggle("flex", hasNoResults);
   }
+
+  function setChipActive(chip: HTMLElement, active: boolean) {
+    if (active) {
+      chip.classList.add("bg-primary", "text-on-primary", "border-primary");
+      chip.classList.remove(
+        "bg-surface-container-low",
+        "text-on-surface-variant",
+        "border-outline-variant/50",
+        "hover:border-primary/50",
+        "hover:text-primary",
+      );
+    } else {
+      chip.classList.remove("bg-primary", "text-on-primary", "border-primary");
+      chip.classList.add(
+        "bg-surface-container-low",
+        "text-on-surface-variant",
+        "border-outline-variant/50",
+        "hover:border-primary/50",
+        "hover:text-primary",
+      );
+    }
+  }
+
+  categoryChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const cat = chip.dataset.category!;
+      if (selectedCategories.has(cat)) {
+        selectedCategories.delete(cat);
+        setChipActive(chip, false);
+      } else {
+        selectedCategories.add(cat);
+        setChipActive(chip, true);
+      }
+      applyFilters();
+    });
+  });
 
   filterBtn.addEventListener("click", () => {
     showPinnedOnly = !showPinnedOnly;
@@ -123,11 +245,7 @@
     applyFilters();
   });
 
-  // Clicking the label also toggles
   filterLabel.addEventListener("click", () => filterBtn.click());
-
-  // Re-run filters whenever pin state changes (pin/unpin from cards)
   window.addEventListener("pinstate:changed", applyFilters);
-
   input.addEventListener("input", applyFilters);
 </script>
