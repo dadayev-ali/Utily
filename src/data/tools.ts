@@ -123,15 +123,6 @@ export const tools: Tool[] = [
     category: "text",
   },
   {
-    id: "g5b3c8",
-    icon: "token",
-    title: "JWT Decoder",
-    description:
-      "Decode and inspect JSON Web Token headers, payloads, and validate structure instantly.",
-    href: "/jwt-decoder",
-    category: "encoder-decoder",
-  },
-  {
     id: "f4a2d9",
     icon: "markdown",
     title: "HTML to Markdown Converter",
@@ -139,6 +130,42 @@ export const tools: Tool[] = [
       "Convert HTML markup into Markdown for documentation and codebases.",
     href: "/html-to-markdown",
     category: "converter",
+  },
+  {
+    id: "g5b3c8",
+    icon: "security",
+    title: "JWT Decoder",
+    description:
+      "Decode and inspect JSON Web Token headers, payloads, and validate structure instantly.",
+    href: "/jwt-decoder",
+    category: "encoder-decoder",
+  },
+  {
+    id: "h2k9m4",
+    icon: "tag",
+    title: "UUID Generator",
+    description:
+      "Generate unique v4 UUIDs instantly — single or in bulk up to 1000.",
+    href: "/uuid-generator",
+    category: "generator",
+  },
+  {
+    id: "i6n3p7",
+    icon: "link",
+    title: "URL Parser",
+    description:
+      "Deconstruct any URL into protocol, host, path, query parameters, and hash.",
+    href: "/url-parser",
+    category: "converter",
+  },
+  {
+    id: "j4r7t2",
+    icon: "filter_list",
+    title: "Remove Duplicate Lines",
+    description:
+      "Remove duplicate lines instantly, with options for case sensitivity, trimming, and sorting.",
+    href: "/remove-duplicate-lines",
+    category: "text",
   },
   // {
   //   icon: "currency_exchange",
