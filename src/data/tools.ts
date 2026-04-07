@@ -4,7 +4,8 @@ export type ToolCategory =
   | "calculator"
   | "formatter"
   | "generator"
-  | "encoder-decoder";
+  | "encoder-decoder"
+  | "tester";
 
 export const categoryMeta: Record<
   ToolCategory,
@@ -14,8 +15,9 @@ export const categoryMeta: Record<
   converter: { label: "Converter", icon: "sync_alt" },
   calculator: { label: "Calculator", icon: "calculate" },
   formatter: { label: "Formatter", icon: "data_object" },
-  generator: { label: "Generator", icon: "auto_awesome" },
+  generator: { label: "Generator", icon: "generating_tokens" },
   "encoder-decoder": { label: "Encoder/Decoder", icon: "code" },
+  tester: { label: "Tester", icon: "bug_report" },
 };
 
 export interface Tool {
@@ -166,6 +168,42 @@ export const tools: Tool[] = [
       "Remove duplicate lines instantly, with options for case sensitivity, trimming, and sorting.",
     href: "/remove-duplicate-lines",
     category: "text",
+  },
+  {
+    id: "k8s2v5",
+    icon: "tag",
+    title: "Hash Generator",
+    description:
+      "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from any text instantly.",
+    href: "/hash-generator",
+    category: "generator",
+  },
+  {
+    id: "l3m7n1",
+    icon: "manage_search",
+    title: "Regex Tester",
+    description:
+      "Test and debug regular expressions with match highlighting and flag toggles.",
+    href: "/regex-tester",
+    category: "tester",
+  },
+  {
+    id: "m4p8q2",
+    icon: "sort",
+    title: "Text Sorter",
+    description:
+      "Sort lines alphabetically, by length, in reverse, or randomly with flexible options.",
+    href: "/text-sorter",
+    category: "text",
+  },
+  {
+    id: "n5q9r3",
+    icon: "article",
+    title: "Lorem Ipsum Generator",
+    description:
+      "Generate placeholder text by paragraphs, sentences or words instantly.",
+    href: "/lorem-generator",
+    category: "generator",
   },
   // {
   //   icon: "currency_exchange",

@@ -145,44 +145,66 @@ export default function RemoveDuplicateLines() {
     </label>
   );
 
+  const OptionsPanel = () => (
+    <div className="bg-surface-container border border-outline-variant/30 rounded-xl overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-3 border-b border-outline-variant/20">
+        <span className="material-symbols-outlined text-primary text-xl">settings</span>
+        <span className="text-xs font-bold uppercase tracking-widest text-on-surface">Options</span>
+      </div>
+      <div className="p-5 space-y-4">
+        <Toggle label="Case Sensitive"   checked={caseSensitive}  onChange={setCaseSensitive}  />
+        <Toggle label="Trim Whitespace"  checked={trimWhitespace} onChange={setTrimWhitespace} />
+        <Toggle label="Alphabetical Sort" checked={sortAlpha}     onChange={setSortAlpha}      />
+      </div>
+    </div>
+  );
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Options — mobile only (top) */}
+      <div className="lg:hidden col-span-1">
+        <OptionsPanel />
+      </div>
+
       {/* Left: Input + Output */}
       <div className="lg:col-span-8 space-y-5">
         {/* Input */}
-        <div className="relative bg-surface-container border border-outline-variant/30 rounded-xl overflow-hidden focus-within:border-primary transition-colors">
-          <div className="absolute top-3 right-5 flex items-center gap-2 z-10">
-            <button
-              onClick={handlePaste}
-              className={`${CHIP} bg-secondary-container text-on-secondary-container`}
-            >
-              <span className="material-symbols-outlined text-sm">
-                content_paste
-              </span>
-              Paste
-            </button>
-            <button
-              onClick={handleClear}
-              className={`${CHIP} bg-error-container/40 text-error`}
-            >
-              <span className="material-symbols-outlined text-sm">delete</span>
-              Clear
-            </button>
+        <div className="bg-surface-container border border-outline-variant/30 rounded-xl overflow-hidden focus-within:border-primary transition-colors">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-outline-variant/20">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Input</span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handlePaste}
+                className={`${CHIP} bg-secondary-container text-on-secondary-container`}
+              >
+                <span className="material-symbols-outlined text-sm">content_paste</span>
+                Paste
+              </button>
+              <button
+                onClick={handleClear}
+                className={`${CHIP} bg-error-container/40 text-error`}
+              >
+                <span className="material-symbols-outlined text-sm">delete</span>
+                Clear
+              </button>
+            </div>
           </div>
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={"Paste your list here..."}
-            spellCheck={false}
-            className="w-full h-72 bg-transparent border-none focus:ring-0 focus:outline-none outline-none text-on-surface p-5 font-mono text-sm leading-relaxed resize-none placeholder:text-on-surface-variant/40 focus:shadow-none"
-            style={{ outline: "none", boxShadow: "none" }}
-          />
-          <div className="absolute bottom-3 right-4">
-            <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/30">
-              {lineCount > 0
-                ? `${lineCount} ${lineCount === 1 ? "line" : "lines"}`
-                : "empty buffer"}
-            </span>
+          <div className="relative">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={"Paste your list here..."}
+              spellCheck={false}
+              className="w-full h-72 bg-transparent border-none focus:ring-0 focus:outline-none outline-none text-on-surface p-5 font-mono text-sm leading-relaxed resize-none placeholder:text-on-surface-variant/40 focus:shadow-none"
+              style={{ outline: "none", boxShadow: "none" }}
+            />
+            <div className="absolute bottom-3 right-4">
+              <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/30">
+                {lineCount > 0
+                  ? `${lineCount} ${lineCount === 1 ? "line" : "lines"}`
+                  : "empty buffer"}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -283,33 +305,9 @@ export default function RemoveDuplicateLines() {
           </div>
         </div>
 
-        {/* Settings */}
-        <div className="bg-surface-container border border-outline-variant/30 rounded-xl overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3 border-b border-outline-variant/20">
-            <span className="material-symbols-outlined text-primary text-xl">
-              settings
-            </span>
-            <span className="text-xs font-bold uppercase tracking-widest text-on-surface">
-              Options
-            </span>
-          </div>
-          <div className="p-5 space-y-4">
-            <Toggle
-              label="Case Sensitive"
-              checked={caseSensitive}
-              onChange={setCaseSensitive}
-            />
-            <Toggle
-              label="Trim Whitespace"
-              checked={trimWhitespace}
-              onChange={setTrimWhitespace}
-            />
-            <Toggle
-              label="Alphabetical Sort"
-              checked={sortAlpha}
-              onChange={setSortAlpha}
-            />
-          </div>
+        {/* Settings — desktop only */}
+        <div className="hidden lg:block">
+          <OptionsPanel />
         </div>
       </div>
     </div>

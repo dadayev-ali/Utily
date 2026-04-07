@@ -145,6 +145,17 @@ export default function CaseConverter() {
     });
   }
 
+  function handleDownload() {
+    if (!input) return;
+    const blob = new Blob([input], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${activeCase ?? "converted"}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   const activeOp = operations.find((o) => o.type === activeCase);
 
   return (
@@ -174,6 +185,14 @@ export default function CaseConverter() {
                   {copied ? "check" : "content_copy"}
                 </span>
                 {copied ? "Copied!" : "Copy"}
+              </button>
+              <button
+                onClick={handleDownload}
+                disabled={!input}
+                className="flex items-center gap-1.5 text-xs font-semibold text-primary dark:text-primary-fixed hover:opacity-70 transition-opacity cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <span className="material-symbols-outlined text-[1.1rem]">download</span>
+                Download
               </button>
               <button
                 onClick={handleClear}

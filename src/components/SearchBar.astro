@@ -26,24 +26,34 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
 </style>
 
 <div class="w-full mb-4 mt-8 sm:mt-10 md:mt-12">
-  <!-- Search input -->
-  <div class="relative flex items-center group max-w-3xl">
-    <span
-      class="material-symbols-outlined absolute left-3 sm:left-4 text-on-surface-variant group-focus-within:text-primary-container transition-colors text-xl sm:text-2xl"
+  <!-- Search input + Clear All -->
+  <div class="flex items-stretch gap-2 sm:gap-4 w-full">
+    <div class="relative flex items-center group flex-1">
+      <span
+        class="material-symbols-outlined absolute left-3 sm:left-4 text-on-surface-variant group-focus-within:text-primary-container transition-colors text-xl sm:text-2xl"
+      >
+        search
+      </span>
+      <input
+        id="tool-search"
+        class="search-input w-full h-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 bg-surface-container-low border border-outline-variant rounded-full font-body text-sm sm:text-base text-on-surface placeholder:text-on-surface-variant/60 transition-all"
+        placeholder="Search for a tool (e.g., GPA, Currency)..."
+        type="text"
+      />
+    </div>
+    <button
+      id="clear-all-btn"
+      class="shrink-0 flex items-center justify-center gap-1.5 px-3 sm:px-6 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant text-[11px] font-bold uppercase tracking-wider transition-all duration-200 hover:border-error/50 hover:text-error cursor-pointer whitespace-nowrap"
+      aria-label="Clear all filters"
     >
-      search
-    </span>
-    <input
-      id="tool-search"
-      class="search-input w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 bg-surface-container-low border border-outline-variant rounded-full font-body text-sm sm:text-base text-on-surface placeholder:text-on-surface-variant/60 transition-all"
-      placeholder="Search for a tool (e.g., GPA, Currency)..."
-      type="text"
-    />
+      <span class="material-symbols-outlined text-sm leading-none">close</span>
+      <span class="hidden sm:inline">Clear options</span>
+    </button>
   </div>
 
   <!-- Pinned filter + Category chips -->
   <div class="flex flex-col sm:flex-row sm:items-center gap-3 mt-4 ml-1">
-    <!-- Pinned toggle (fixed, no scroll) -->
+    <!-- Pinned toggle -->
     <div class="flex items-center gap-3 shrink-0">
       <div
         id="pinned-filter-btn"
@@ -72,18 +82,22 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
     <!-- Divider -->
     <div class="hidden sm:block w-px h-5 bg-outline-variant/40 shrink-0"></div>
 
-    <!-- Category chips — drag-scrollable, mapped from ToolCategory -->
+    <!-- Category chips — drag-scrollable -->
     <div id="chips-scroll-container" class="flex-1 overflow-x-auto">
       <div class="flex items-center gap-2 w-max" id="category-chips">
-        {categories.map((cat) => (
-          <button
-            class="category-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline-variant/50 bg-surface-container-low text-on-surface-variant text-[11px] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer hover:border-primary/50 hover:text-primary select-none whitespace-nowrap"
-            data-category={cat}
-          >
-            <span class="material-symbols-outlined text-sm leading-none">{categoryMeta[cat].icon}</span>
-            {categoryMeta[cat].label}
-          </button>
-        ))}
+        {
+          categories.map((cat) => (
+            <button
+              class="category-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline-variant/50 bg-surface-container-low text-on-surface-variant text-[11px] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer hover:border-primary/50 hover:text-primary select-none whitespace-nowrap"
+              data-category={cat}
+            >
+              <span class="material-symbols-outlined text-sm leading-none">
+                {categoryMeta[cat].icon}
+              </span>
+              {categoryMeta[cat].label}
+            </button>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -103,6 +117,7 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
   }
 
   const input = document.getElementById("tool-search") as HTMLInputElement;
+  const clearAllBtn = document.getElementById("clear-all-btn") as HTMLElement;
   const filterBtn = document.getElementById("pinned-filter-btn") as HTMLElement;
   const filterThumb = document.getElementById(
     "pinned-filter-thumb",
@@ -123,7 +138,7 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
   let showPinnedOnly = false;
   const selectedCategories = new Set<string>();
 
-  // ── Drag-to-scroll on chips container ────────────────────────────────────────
+  // ── Drag-to-scroll ────────────────────────────────────────────────────────────
   let isDragging = false;
   let dragStartX = 0;
   let scrollStart = 0;
@@ -151,7 +166,6 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
     chipsScroll.scrollLeft = scrollStart - walk;
   });
 
-  // Suppress chip click if user was dragging
   chipsScroll.addEventListener(
     "click",
     (e) => {
@@ -174,18 +188,16 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
       const title = card.dataset.title ?? "";
       const id = card.dataset.toolId ?? "";
       const category = card.dataset.category ?? "";
-      const matchesQuery = title.includes(query);
-      const matchesPinned = !showPinnedOnly || pinned.includes(id);
-      const matchesCategory =
-        selectedCategories.size === 0 || selectedCategories.has(category);
-      const show = matchesQuery && matchesPinned && matchesCategory;
+      const show =
+        title.includes(query) &&
+        (!showPinnedOnly || pinned.includes(id)) &&
+        (selectedCategories.size === 0 || selectedCategories.has(category));
       card.style.display = show ? "" : "none";
       if (show) visible++;
     });
 
-    const hasNoResults = visible === 0;
-    noResults.classList.toggle("hidden", !hasNoResults);
-    noResults.classList.toggle("flex", hasNoResults);
+    noResults.classList.toggle("hidden", visible !== 0);
+    noResults.classList.toggle("flex", visible === 0);
   }
 
   function setChipActive(chip: HTMLElement, active: boolean) {
@@ -227,7 +239,6 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
   filterBtn.addEventListener("click", () => {
     showPinnedOnly = !showPinnedOnly;
     filterBtn.setAttribute("aria-checked", String(showPinnedOnly));
-
     if (showPinnedOnly) {
       filterBtn.style.backgroundColor = "#00478d";
       filterThumb.style.transform = "translateX(20px)";
@@ -241,11 +252,30 @@ const categories = Object.keys(categoryMeta) as ToolCategory[];
         "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24";
       filterLabel.classList.replace("text-primary", "text-on-surface-variant");
     }
+    applyFilters();
+  });
 
+  function resetPinnedToggle() {
+    showPinnedOnly = false;
+    filterBtn.setAttribute("aria-checked", "false");
+    filterBtn.style.backgroundColor = "#424752";
+    filterThumb.style.transform = "translateX(0px)";
+    filterIcon.style.fontVariationSettings =
+      "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+    filterLabel.classList.replace("text-primary", "text-on-surface-variant");
+  }
+
+  clearAllBtn.addEventListener("click", () => {
+    input.value = "";
+    resetPinnedToggle();
+    selectedCategories.clear();
+    categoryChips.forEach((chip) => setChipActive(chip, false));
     applyFilters();
   });
 
   filterLabel.addEventListener("click", () => filterBtn.click());
   window.addEventListener("pinstate:changed", applyFilters);
-  input.addEventListener("input", applyFilters);
+  input.addEventListener("input", () => {
+    applyFilters();
+  });
 </script>
