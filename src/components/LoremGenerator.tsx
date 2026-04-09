@@ -47,12 +47,10 @@ function computeStats(text: string) {
   const words = text.split(/\s+/).filter(Boolean);
   const chars = text.length;
   const avgLen = words.length ? (words.reduce((s, w) => s + w.replace(/[^a-z]/gi, "").length, 0) / words.length) : 0;
-  const readSec = Math.ceil(words.length / 200 * 60);
   return {
     words: words.length,
     chars,
     avgLen: avgLen.toFixed(1),
-    readTime: readSec < 60 ? `~${readSec}s` : `~${Math.ceil(readSec / 60)}m`,
   };
 }
 
@@ -188,14 +186,13 @@ export default function LoremGenerator() {
 
         {/* Stats */}
         {stats && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 bg-surface-container border border-outline-variant/30 rounded-xl overflow-hidden divide-x divide-outline-variant/10">
+          <div className="grid grid-cols-3 bg-surface-container border border-outline-variant/30 rounded-xl overflow-hidden divide-x divide-outline-variant/10">
             {[
               { label: "Words",       value: stats.words    },
               { label: "Characters",  value: stats.chars    },
               { label: "Avg. Length", value: stats.avgLen   },
-              { label: "Read Time",   value: stats.readTime },
-            ].map(({ label, value }, i) => (
-              <div key={label} className={`flex flex-col items-center justify-center py-5 gap-1 ${i === 3 ? "col-span-2 sm:col-span-1 border-t sm:border-t-0 divide-outline-variant/10" : ""}`}>
+            ].map(({ label, value }) => (
+              <div key={label} className="flex flex-col items-center justify-center py-5 gap-1">
                 <span className="text-2xl font-extrabold text-on-surface font-headline">{value}</span>
                 <span className="text-[9px] font-bold uppercase tracking-widest text-on-surface-variant">{label}</span>
               </div>

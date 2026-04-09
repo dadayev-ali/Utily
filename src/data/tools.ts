@@ -205,14 +205,41 @@ export const tools: Tool[] = [
     href: "/lorem-generator",
     category: "generator",
   },
-  // {
-  //   icon: "currency_exchange",
-  //   title: "Currency Converter",
-  //   description: "Real-time global exchange rates with architectural precision.",
-  // },
-  // {
-  //   icon: "format_align_left",
-  //   title: "Text Formatter",
-  //   description: "Sanitize and structure raw strings for system integration.",
-  // },
+  {
+    id: "o6r0s4",
+    icon: "database",
+    title: "SQL Formatter",
+    description:
+      "Beautify, minify, or strip comments from SQL queries with syntax highlighting.",
+    href: "/sql-formatter",
+    category: "formatter",
+  },
+
+  {
+    id: "p7s1t5",
+    icon: "gradient",
+    title: "CSS Gradient Generator",
+    description:
+      "Build linear and radial gradients visually and copy CSS instantly.",
+    href: "/css-gradient-generator",
+    category: "generator",
+  },
+  {
+    id: "q8t2u6",
+    icon: "table_rows",
+    title: "Random Data Generator",
+    description:
+      "Generate realistic fake data for testing — export as CSV, JSON, or SQL instantly.",
+    href: "/random-data-generator",
+    category: "generator",
+  },
+  {
+    id: "r9u3v7",
+    icon: "memory",
+    title: "Bitwise Calculator",
+    description:
+      "Execute AND, OR, XOR, NOT and shift operations with full binary visualization.",
+    href: "/bitwise-calculator",
+    category: "calculator",
+  },
 ];

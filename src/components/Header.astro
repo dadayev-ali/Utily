@@ -26,9 +26,10 @@ const isHome = Astro.url.pathname === "/";
             : "text-on-surface-variant lg:text-base hover:text-on-surface transition-colors duration-200"}
           href="/">Home</a
         >
-        <a
-          class="text-on-surface-variant lg:text-base hover:text-on-surface transition-colors duration-200"
-          href="#">Contact Me</a
+        <span
+          class="text-on-surface-variant/30 dark:text-on-surface-variant/60 lg:text-base cursor-not-allowed select-none"
+          title="Portfolio coming soon"
+        >Portfolio</span
         >
         <button
           id="theme-toggle"
@@ -99,13 +100,13 @@ const isHome = Astro.url.pathname === "/";
       Home
     </a>
 
-    <a
-      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-200"
-      href="#"
+    <span
+      class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-on-surface-variant/30 dark:text-on-surface-variant/60 cursor-not-allowed select-none"
+      title="Portfolio coming soon"
     >
-      <span class="material-symbols-outlined text-lg">mail</span>
-      Contact Me
-    </a>
+      <span class="material-symbols-outlined text-lg">person</span>
+      Portfolio
+    </span>
     <button
       id="theme-toggle-mobile"
       class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-200 w-full"
