@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 interface Props {
   title?: string;
@@ -8,11 +10,16 @@ interface Props {
 const { title = "Utily" } = Astro.props;
 ---
 
-<html class="light" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <script is:inline>
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap"
@@ -23,7 +30,11 @@ const { title = "Utily" } = Astro.props;
       rel="stylesheet"
     />
   </head>
-  <body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <body
+    class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed overflow-x-hidden"
+  >
+    <Header />
     <slot />
+    <Footer />
   </body>
 </html>

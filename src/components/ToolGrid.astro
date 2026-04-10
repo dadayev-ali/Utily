@@ -1,15 +1,132 @@
 ---
 import ToolCard from "./ToolCard.astro";
-
-const tools = [
-  {
-    icon: "calculate",
-    title: "GPA Calculator",
-    description: "Fast, flexible GPA calculation for any grading system.",
-  },
-];
+import { tools } from "../data/tools";
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-  {tools.map((tool) => <ToolCard {...tool} />)}
+<div class="relative min-h-120">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+    id="tool-grid"
+  >
+    {tools.map((tool) => <ToolCard {...tool} />)}
+  </div>
+
+  <div
+    id="no-results"
+    class="hidden absolute inset-0 items-center justify-center"
+  >
+    <p class="text-on-surface-variant text-base sm:text-lg">
+      No tools found for your search.
+    </p>
+  </div>
 </div>
+
+<script is:inline>
+  (function () {
+    const STORAGE_KEY = "utily_pinned_tools";
+
+    function getPinned() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function setPinned(ids) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    }
+
+    function applyPinState() {
+      const pinned = getPinned();
+      const grid = document.getElementById("tool-grid");
+      if (!grid) return;
+
+      const cards = Array.from(grid.querySelectorAll(".tool-card"));
+
+      // Update visual state of each pin button
+      cards.forEach((card) => {
+        const id = card.dataset.toolId;
+        const btn = card.querySelector(".pin-btn");
+        const icon = card.querySelector(".pin-icon");
+        if (!btn || !icon) return;
+
+        const isPinned = pinned.includes(id);
+        if (isPinned) {
+          icon.textContent = "keep";
+          icon.style.fontVariationSettings =
+            "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24";
+          btn.classList.add("text-primary", "!opacity-100");
+          btn.classList.remove(
+            "text-outline",
+            "lg:opacity-0",
+            "lg:group-hover:opacity-100",
+          );
+          btn.title = "Unpin";
+        } else {
+          icon.textContent = "keep";
+          icon.style.fontVariationSettings =
+            "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+          btn.classList.remove("text-primary", "!opacity-100");
+          btn.classList.add(
+            "text-outline",
+            "lg:opacity-0",
+            "lg:group-hover:opacity-100",
+          );
+          btn.title = "Pin to top";
+        }
+      });
+
+      // Re-order: pinned cards first (preserving pin order), then the rest
+      const pinnedCards = [];
+      const unpinnedCards = [];
+
+      cards.forEach((card) => {
+        if (pinned.includes(card.dataset.toolId)) {
+          pinnedCards.push(card);
+        } else {
+          unpinnedCards.push(card);
+        }
+      });
+
+      // Sort pinned cards by their pin order
+      pinnedCards.sort(
+        (a, b) =>
+          pinned.indexOf(a.dataset.toolId) - pinned.indexOf(b.dataset.toolId),
+      );
+
+      [...pinnedCards, ...unpinnedCards].forEach((card) =>
+        grid.appendChild(card),
+      );
+    }
+
+    function handlePinClick(e) {
+      const btn = e.target.closest(".pin-btn");
+      if (!btn) return;
+
+      // Prevent the anchor from navigating
+      e.preventDefault();
+      e.stopPropagation();
+
+      const id = btn.dataset.toolId;
+      let pinned = getPinned();
+
+      if (pinned.includes(id)) {
+        pinned = pinned.filter((p) => p !== id);
+      } else {
+        pinned = [id, ...pinned];
+      }
+
+      setPinned(pinned);
+      applyPinState();
+      window.dispatchEvent(new CustomEvent("pinstate:changed"));
+    }
+
+    document
+      .getElementById("tool-grid")
+      ?.addEventListener("click", handlePinClick);
+
+    // Apply on initial load
+    applyPinState();
+  })();
+</script>

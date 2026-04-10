@@ -1,28 +1,62 @@
 ---
 interface Props {
+  id?: string;
   icon: string;
   title: string;
   description: string;
+  href?: string;
+  category?: string;
 }
 
-const { icon, title, description } = Astro.props;
+const { id, icon, title, description, href, category } = Astro.props;
+const Tag = href ? "a" : "div";
 ---
 
-<div
-  class="group cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col justify-between min-h-[180px] sm:min-h-[200px] md:min-h-[220px]"
+<Tag
+  href={href}
+  data-title={title.toLowerCase()}
+  data-tool-id={id}
+  data-category={category}
+  class="tool-card group relative cursor-pointer bg-surface-container-highest p-5 sm:p-6 md:p-8 rounded-lg hover:bg-primary-fixed dark:hover:bg-surface-container-high hover:shadow-[0_12px_40px_-10px_rgba(25,28,30,0.08)] transition-all duration-300 flex flex-col min-h-45 sm:min-h-50 md:min-h-55"
 >
-  <div class="flex justify-between items-start">
-    <div class="bg-surface-container-lowest p-2 sm:p-3 rounded-lg group-hover:bg-on-primary">
-      <span class="material-symbols-outlined text-tertiary text-2xl sm:text-3xl">{icon}</span>
+  <!-- Pin button: always visible on touch screens, hover-only on desktop -->
+  <button
+    class="pin-btn absolute top-3 right-3 lg:right-auto lg:left-3 z-10
+           w-10 cursor-pointer h-10 flex items-center justify-center rounded transition-all duration-200
+           bg-surface-container-low dark:bg-surface-container-high border border-outline-variant/30
+           lg:bg-transparent lg:dark:bg-transparent lg:border-transparent lg:group-hover:bg-surface-container-low lg:dark:group-hover:bg-surface-container-high lg:group-hover:border-outline-variant/30
+           lg:opacity-0 lg:group-hover:opacity-100
+           text-outline hover:text-primary
+           active:scale-90"
+    data-tool-id={id}
+    aria-label="Pin tool"
+    title="Pin to top"
+  >
+    <span class="material-symbols-outlined text-[1.1rem] pin-icon">keep</span>
+  </button>
+
+  <div class="flex justify-between items-start mb-4 sm:mb-5">
+    <div
+      class="bg-surface-container-lowest w-12 h-12 flex items-center justify-center rounded-lg group-hover:bg-on-primary dark:group-hover:bg-surface-container-lowest"
+    >
+      <span class="material-symbols-outlined text-tertiary text-2xl sm:text-3xl"
+        >{icon}</span
+      >
     </div>
     <span
       class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity"
-    >arrow_outward</span>
+      >arrow_outward</span
+    >
   </div>
-  <div>
-    <h3 class="text-base sm:text-lg md:text-xl font-bold text-on-surface mb-1 sm:mb-2">{title}</h3>
-    <p class="text-on-surface-variant text-xs sm:text-sm group-hover:text-on-secondary-fixed-variant">
-      {description}
-    </p>
-  </div>
-</div>
+  <h3
+    class="text-base sm:text-lg md:text-xl font-bold text-on-surface mb-1 sm:mb-2"
+  >
+    {title}
+  </h3>
+  <p
+    class="text-on-surface-variant text-xs sm:text-sm group-hover:text-on-secondary-fixed-variant"
+  >
+    {description}
+  </p>
+  <div class="flex-1"></div>
+</Tag>
