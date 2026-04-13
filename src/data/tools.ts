@@ -15,7 +15,7 @@ export const categoryMeta: Record<
   converter: { label: "Converter", icon: "sync_alt" },
   calculator: { label: "Calculator", icon: "calculate" },
   formatter: { label: "Formatter", icon: "data_object" },
-  generator: { label: "Generator", icon: "generating_tokens" },
+  generator: { label: "Generator", icon: "tag" },
   "encoder-decoder": { label: "Encoder/Decoder", icon: "code" },
   tester: { label: "Tester", icon: "bug_report" },
 };
