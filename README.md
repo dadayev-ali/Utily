@@ -1,43 +1,92 @@
-# Astro Starter Kit: Minimal
+# 🛠️ Utily – A Curated Gallery of Functional Tools
 
-```sh
-npm create astro@latest -- --template minimal
+**Utily** is a modern, fully responsive utility toolkit built with **Astro**, **React**, and **Tailwind CSS**. It offers a clean collection of precision-built developer and everyday tools.
+
+> ⚡ Exacting tools built with mathematical rigor. No fluff, no clutter — just the precision to get it done.
+
+---
+
+## 🚀 Tech Stack
+
+| Category       | Tools & Libraries                                                 |
+| -------------- | ----------------------------------------------------------------- |
+| **Framework**  | [Astro](https://astro.build/)                                     |
+| **UI Layer**   | [React](https://react.dev/)                                       |
+| **Styling**    | [Tailwind CSS v4](https://tailwindcss.com/)                       |
+| **Validation** | [Zod](https://zod.dev/)                                           |
+| **Icons**      | [Material Symbols](https://fonts.google.com/icons) (Google Fonts) |
+| **Tooling**    | Prettier, TypeScript, Vite                                        |
+
+---
+
+## 🛠️ Getting Started
+
+Clone the repo and install dependencies:
+
+```bash
+git clone https://github.com/dadayev-ali/Utily.git
+cd Utily
+npm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Start the development server:
 
-## 🚀 Project Structure
+```bash
+npm run dev
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+Build for production:
 
-```text
-/
-├── public/
+```bash
+npm run build
+npm run preview
+```
+
+---
+
+## 📁 Project Structure
+
+```bash
+.
+├── public/               # Static assets (favicon, images)
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/       # Reusable UI components (Header, Footer, Hero, ToolCard...)
+│   ├── data/             # Tool definitions and category metadata
+│   ├── layouts/          # Base page layout
+│   ├── pages/            # One page per tool + index
+│   └── styles/           # Global CSS (Tailwind setup)
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 🧰 Available Tools
 
-Any static assets, like images, can be placed in the `public/` directory.
+| Category            | Tools                                                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **Generator**       | Password Generator, UUID Generator, Hash Generator, Lorem Ipsum Generator, CSS Gradient Generator, Random Data Generator |
+| **Converter**       | Color Converter, Unit Converter, CSV to JSON, HTML to Markdown, URL Parser, URL Encoder/Decoder                          |
+| **Calculator**      | GPA Calculator, Loan Calculator, Bitwise Calculator                                                                      |
+| **Formatter**       | JSON Formatter, SQL Formatter                                                                                            |
+| **Text**            | Word Counter, Case Converter, Text Sorter, Remove Duplicate Lines                                                        |
+| **Encoder/Decoder** | Base64 Encoder/Decoder, JWT Decoder, URL Encoder/Decoder                                                                 |
+| **Tester**          | Regex Tester                                                                                                             |
 
-## 🧞 Commands
+---
 
-All commands are run from the root of the project, from a terminal:
+## 💡 Features
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- ⚡ Fully responsive, mobile-first design
+- 🌙 Dark / Light mode with persistent preference
+- 📌 Pin your favorite tools to the top
+- 🔍 Live search across all tools
+- 🎨 Tailwind CSS v4 utility-first styling
+- 🧩 Modular tool architecture — each tool is an isolated page
 
-## 👀 Want to learn more?
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🤝 Acknowledgements
+
+Big thanks to the open-source libraries and tools that make Utily possible.
+
+---

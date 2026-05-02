@@ -31,6 +31,77 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    id: "b2e9f4",
+    icon: "payments",
+    title: "Loan Calculator",
+    description:
+      "Calculate monthly payments, total interest, and full amortization schedule for any loan.",
+    href: "/loan-calculator",
+    category: "calculator",
+  },
+  {
+    id: "o6r0s4",
+    icon: "database",
+    title: "SQL Formatter",
+    description:
+      "Beautify, minify, or strip comments from SQL queries with syntax highlighting.",
+    href: "/sql-formatter",
+    category: "formatter",
+  },
+  {
+    id: "c7d4a1",
+    icon: "table_convert",
+    title: "CSV to JSON Converter",
+    description:
+      "Convert CSV files or pasted data into structured JSON with configurable parsing rules.",
+    href: "/csv-to-json-converter",
+    category: "converter",
+  },
+  {
+    id: "j4r7t2",
+    icon: "filter_list",
+    title: "Remove Duplicate Lines",
+    description:
+      "Remove duplicate lines instantly, with options for case sensitivity, trimming, and sorting.",
+    href: "/remove-duplicate-lines",
+    category: "text",
+  },
+  {
+    id: "f1c4d2",
+    icon: "data_object",
+    title: "JSON Formatter",
+    description:
+      "Validate, beautify, minify, and generate TypeScript interfaces from JSON.",
+    href: "/json-formatter",
+    category: "formatter",
+  },
+  {
+    id: "a8c3f2",
+    icon: "code",
+    title: "Base64 Encoder/Decoder",
+    description: "Encode text to Base64 or decode to readable content.",
+    href: "/base64-encoder-decoder",
+    category: "encoder-decoder",
+  },
+  {
+    id: "q8t2u6",
+    icon: "table_rows",
+    title: "Random Data Generator",
+    description:
+      "Generate realistic fake data for testing — export as CSV, JSON, or SQL instantly.",
+    href: "/random-data-generator",
+    category: "generator",
+  },
+  {
+    id: "m4p8q2",
+    icon: "sort",
+    title: "Text Sorter",
+    description:
+      "Sort lines alphabetically, by length, in reverse, or randomly with flexible options.",
+    href: "/text-sorter",
+    category: "text",
+  },
+  {
     id: "a3f8c1",
     icon: "calculate",
     title: "GPA Calculator",
@@ -69,41 +140,6 @@ export const tools: Tool[] = [
     title: "Unit Converter",
     description: "Seamless conversion between metric and imperial standards.",
     href: "/unit-converter",
-    category: "converter",
-  },
-  {
-    id: "f1c4d2",
-    icon: "data_object",
-    title: "JSON Formatter",
-    description:
-      "Validate, beautify, minify, and generate TypeScript interfaces from JSON.",
-    href: "/json-formatter",
-    category: "formatter",
-  },
-  {
-    id: "a8c3f2",
-    icon: "code",
-    title: "Base64 Encoder/Decoder",
-    description: "Encode text to Base64 or decode to readable content.",
-    href: "/base64-encoder-decoder",
-    category: "encoder-decoder",
-  },
-  {
-    id: "b2e9f4",
-    icon: "payments",
-    title: "Loan Calculator",
-    description:
-      "Calculate monthly payments, total interest, and full amortization schedule for any loan.",
-    href: "/loan-calculator",
-    category: "calculator",
-  },
-  {
-    id: "c7d4a1",
-    icon: "table_convert",
-    title: "CSV to JSON Converter",
-    description:
-      "Convert CSV files or pasted data into structured JSON with configurable parsing rules.",
-    href: "/csv-to-json-converter",
     category: "converter",
   },
   {
@@ -161,15 +197,6 @@ export const tools: Tool[] = [
     category: "converter",
   },
   {
-    id: "j4r7t2",
-    icon: "filter_list",
-    title: "Remove Duplicate Lines",
-    description:
-      "Remove duplicate lines instantly, with options for case sensitivity, trimming, and sorting.",
-    href: "/remove-duplicate-lines",
-    category: "text",
-  },
-  {
     id: "k8s2v5",
     icon: "tag",
     title: "Hash Generator",
@@ -188,15 +215,6 @@ export const tools: Tool[] = [
     category: "tester",
   },
   {
-    id: "m4p8q2",
-    icon: "sort",
-    title: "Text Sorter",
-    description:
-      "Sort lines alphabetically, by length, in reverse, or randomly with flexible options.",
-    href: "/text-sorter",
-    category: "text",
-  },
-  {
     id: "n5q9r3",
     icon: "article",
     title: "Lorem Ipsum Generator",
@@ -204,15 +222,6 @@ export const tools: Tool[] = [
       "Generate placeholder text by paragraphs, sentences or words instantly.",
     href: "/lorem-generator",
     category: "generator",
-  },
-  {
-    id: "o6r0s4",
-    icon: "database",
-    title: "SQL Formatter",
-    description:
-      "Beautify, minify, or strip comments from SQL queries with syntax highlighting.",
-    href: "/sql-formatter",
-    category: "formatter",
   },
 
   {
@@ -222,15 +231,6 @@ export const tools: Tool[] = [
     description:
       "Build linear and radial gradients visually and copy CSS instantly.",
     href: "/css-gradient-generator",
-    category: "generator",
-  },
-  {
-    id: "q8t2u6",
-    icon: "table_rows",
-    title: "Random Data Generator",
-    description:
-      "Generate realistic fake data for testing — export as CSV, JSON, or SQL instantly.",
-    href: "/random-data-generator",
     category: "generator",
   },
   {
