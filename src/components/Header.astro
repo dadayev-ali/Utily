@@ -152,14 +152,6 @@ const isHome = Astro.url.pathname === "/";
   closeBtn.addEventListener("click", closeSidebar);
   backdrop.addEventListener("click", closeSidebar);
 
-  const header = document.getElementById("main-header");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 0) {
-      header.style.borderBottomColor = "#00478d";
-    } else {
-      header.style.borderBottomColor = "transparent";
-    }
-  });
 
   function updateThemeIcons() {
     const isDark = document.documentElement.classList.contains("dark");
